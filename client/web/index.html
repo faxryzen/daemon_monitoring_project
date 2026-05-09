@@ -4,9 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DMP</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <h1>yooo</h1>
-    <p>paragraph</p>
+
+    <header class="navbar">
+      <a href="/" class="logo">
+        <img src="images/dmp_logo.jpg" alt="Название сайта">
+      </a>
+      <div class="dropdown">
+        <button class="dropbtn">Monitoring</button>
+        <div class="dropdown-content">
+          <a href="#">Fetch current</a>
+          <a href="#">Fetch all</a>
+          <a href="#">Configure</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">View</button>
+        <div class="dropdown-content">
+          <a href="#">Switch Theme</a>
+          <a href="#">Reset windows</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">Help</button>
+        <div class="dropdown-content">
+          <a href="#">About</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="under-navbar">
+  
+      <div class="sidebar-wrapper resizable" id="sidebar1">
+        <aside class="serverlist" id="serverlist">
+          <div id="serverlist-c" class="serverlist-content"></div>
+        </aside>
+        <div class="custom-scrollbar">
+          <div class="custom-thumb" id="custom-thumb"></div>
+        </div>
+        <div class="resizer"></div>
+      </div>
+
+      <div class="sidebar-wrapper resizable" id="sidebar2">
+        <aside class="serverlist" id="partlist">
+          <div id="serverlist-c" class="serverlist-content"></div>
+        </aside>
+        <div class="resizer"></div>
+      </div>
+  
+      <main class="content">
+        <header class="server-info">
+          PC 1
+        </header>
+      </main>
+    </div>
+
+    <footer class="fetch-status">Metrics collected on December 30 at 8:00:67 PM [3 days ago]</footer>
+
+    <script src="script.js"></script>
   </body>
 </html>
