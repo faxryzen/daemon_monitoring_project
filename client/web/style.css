@@ -1,7 +1,7 @@
 .navbar {
   display: flex;
   width: 100%;
-  height: 50px;
+  height: 40px;
   background-color: #e6e6e6;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -12,28 +12,22 @@
 .logo img {
   height: 30px; /* Задайте нужную высоту */
   width: auto;  /* Ширина подстроится автоматически */
-  padding: 10px 50px;
+  padding: 4px 50px;
   display: block;
 }
 
 .dropdown {
   position: relative;
   display: inline-block;
-  /*border-right: 1px solid #ccc;*/
-  border-left: 1px solid #ccc;
-}
-
-.dropdown:last-child {
-  border-right: none;
 }
 
 .dropbtn {
   background-color: #e6e6e6;
   color: rgb(40, 40, 40);
-  font-size: large;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  height: 50px;
-  padding: 0 50px;
+  font-size: medium;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 40px;
+  padding: 0 20px;
   border: none;
   cursor: pointer;
 }
@@ -53,8 +47,8 @@
 
 .dropdown-content a {
   color: rgb(40, 40, 40);
-  font-size: large;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: medium;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   min-width: 190px;
   border-bottom: 1px solid #ccc;
   padding: 12px 16px;
@@ -83,34 +77,19 @@
   width: 250px;
   height: calc(100vh - 106px);
   background-color: #f9f9f9;
-  border-right: 1px solid #ccc;
   display: flex;
-  position: sticky;
+  /*position: sticky;*/
 }
 
 .serverlist {
   flex: 1;
-  overflow-y: hidden;
+  overflow-y: scroll;
   overflow-x: hidden;
-  /*scrollbar-gutter: stable;*/
-
-  /*-webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
-  mask-image: linear-gradient(to right, black 90%, transparent 100%);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;*/
-}
-
-.resizer {
-  width: 3px;
-  cursor: col-resize;
-  position: relative;
-
-  background: transparent;
-  transition: all 0.2s ease;
-}
-
-.resizer:hover {
-  background: rgba(148, 130, 179, 0.74);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  background-color: #f9f9f9;
+  /*padding-right: 10px;*/
+  box-sizing: border-box;
 }
 
 .serverlist-content {
@@ -125,8 +104,8 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-size: large;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: medium;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   transition: all 0.2s ease;
   border-bottom: 1px solid #cccccc41;
   padding: 15px 15px;
@@ -141,21 +120,63 @@
   background-color: rgb(212, 202, 230);
 }
 
-.serverlist:hover {
-  overflow-y: auto;
+.custom-scrollbar {
+  position: absolute;
+  top: 0;
+  right: 6px;
+  width: 4px;
+  top: 4px;
+  height: 100%;
+  /*padding: 3px 0;*/
+  box-sizing: border-box;
+  pointer-events: none;
+  z-index: 90;
 }
 
-
-.serverlist::-webkit-scrollbar {
-  width: 5px;
-}
-
-.serverlist::-webkit-scrollbar-thumb {
-  background-color: #88888880;
+.custom-scrollbar-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   border-radius: 10px;
+  background-color: #88888880;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-height: 20px;
 }
-.serverlist::-webkit-scrollbar-thumb:hover {
+
+.custom-scrollbar-thumb:hover {
   background-color: rgba(155, 133, 194, 0.822);
+}
+
+.resizer {
+  position: absolute;
+  top: 0;
+  right: -3px;
+  width: 6px;
+  height: 100%;
+  cursor: w-resize;
+  z-index: 100;
+  
+  background: linear-gradient(
+    to right, 
+    transparent 40%, 
+    #cccccc41 40%, 
+    #cccccc41 60%, 
+    transparent 60%
+  );
+  transition: background 0.2s;
+}
+
+.resizer:hover {
+  background: linear-gradient(
+    to right, 
+    transparent 40%, 
+    rgb(155, 133, 194),
+    rgb(155, 133, 194),
+    transparent 60%
+  );
 }
 
 .content {
@@ -170,6 +191,6 @@
   font-size: medium;
   text-align: center;
   background-color: #e6e6e6;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   box-sizing: border-box;
 }

@@ -49,3 +49,72 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+(function() {
+  const viewport = document.getElementById('serverlist');   // скроллящийся элемент
+  const thumb = document.getElementById('custom-scrollbar-thumb');
+  const scrollbar = document.getElementById('custom-scrollbar');
+
+  if (!viewport || !thumb) return;
+
+  // Обновить размер и положение ползунка
+  function updateThumb() {
+    const scrollTop = viewport.scrollTop;
+    const scrollHeight = viewport.scrollHeight;
+    const clientHeight = viewport.clientHeight;
+
+    // Если контент меньше высоты — ползунок во весь размер
+    if (scrollHeight <= clientHeight) {
+      thumb.style.height = '100%';
+      thumb.style.top = '0';
+      return;
+    }
+
+    const thumbHeight = Math.max((clientHeight / scrollHeight) * scrollbar.clientHeight, 20);
+    const maxScrollTop = scrollHeight - clientHeight;
+    const maxThumbTop = scrollbar.clientHeight - thumbHeight;
+    const thumbTop = (scrollTop / maxScrollTop) * maxThumbTop;
+
+    thumb.style.height = thumbHeight + 'px';
+    thumb.style.top = thumbTop + 'px';
+  }
+
+  viewport.addEventListener('scroll', updateThumb);
+  // Отслеживаем изменение размеров контейнера
+  new ResizeObserver(updateThumb).observe(viewport);
+  new ResizeObserver(updateThumb).observe(scrollbar);
+
+  // Перетаскивание ползунка
+  let isDragging = false, startY, startThumbTop;
+
+  thumb.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    isDragging = true;
+    startY = e.clientY;
+    startThumbTop = parseFloat(thumb.style.top) || 0;
+    document.body.style.userSelect = 'none';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const deltaY = e.clientY - startY;
+    const maxThumbTop = scrollbar.clientHeight - thumb.clientHeight;
+    let newThumbTop = Math.min(Math.max(startThumbTop + deltaY, 0), maxThumbTop);
+
+    const maxScrollTop = viewport.scrollHeight - viewport.clientHeight;
+    const scrollRatio = newThumbTop / maxThumbTop;
+    viewport.scrollTop = scrollRatio * maxScrollTop;
+
+    updateThumb();
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (isDragging) {
+      isDragging = false;
+      document.body.style.userSelect = '';
+    }
+  });
+
+  // Первичная отрисовка
+  updateThumb();
+})();
