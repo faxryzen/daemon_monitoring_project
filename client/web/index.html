@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DMP</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
   </head>
   <body>
 
@@ -48,21 +49,44 @@
       </div>
 
       <div class="sidebar-wrapper resizable" id="sidebar2">
-        <aside class="serverlist" id="partlist">
-          <div id="serverlist-c" class="serverlist-content"></div>
+        <aside class="serverlist" id="pcparts">
+          <div id="pcparts-c" class="serverlist-content"></div>
         </aside>
+        <div class="custom-scrollbar" id="custom-scrollbar">
+          <div class="custom-scrollbar-thumb" id="custom-scrollbar-thumb"></div>
+        </div>
         <div class="resizer"></div>
       </div>
   
       <main class="content">
-        <header class="server-info">
-          PC 1
-        </header>
+        <div class="metrics-dashboard">
+          
+          <!-- Заголовок: что выбрано -->
+          <div class="metrics-header" id="metrics-header">
+            <span class="metrics-header-icon"></span>
+            <span class="metrics-header-text">Select a server and component to view metrics</span>
+          </div>
+
+          <!-- Карточка текущего значения (одна, динамическая) -->
+          <div class="metric-card metric-card--large" id="metric-current">
+            <div class="metric-card-label" id="metric-label">--</div>
+            <div class="metric-card-value" id="metric-value">--</div>
+            <div class="metric-card-bar">
+              <div class="metric-card-fill" id="metric-fill" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Один большой график на весь контент -->
+          <div class="chart-container chart-container--full" id="chart-main"></div>
+
+        </div>
       </main>
     </div>
 
     <footer class="fetch-status">Metrics collected on December 30 at 8:00:67 PM [3 days ago]</footer>
 
-    <script src="script.js"></script>
+    <script src="src/script.js"></script>
+    <script src="src/metrics.js"></script>
+    <script src="src/buttons.js"></script>
   </body>
 </html>

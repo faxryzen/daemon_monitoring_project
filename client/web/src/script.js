@@ -1,9 +1,9 @@
 const server_list = document.getElementById('serverlist-c');
 
-function createItem(text) {
+function createServerItem(text) {
   const btn = document.createElement('button');
   btn.className = 'server-item';
-  btn.innerHTML = `PCвапвапвапвапвапав${text}`;
+  btn.innerHTML = `DESKTOP-${text}`;
 
   btn.onclick = () => {
     console.log(`Нажата кнопка: PC${text}`);
@@ -13,7 +13,7 @@ function createItem(text) {
 }
 
 for (let i = 1; i <= 200; i++) {
-  server_list.appendChild(createItem(i));
+  server_list.appendChild(createServerItem(i));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -50,27 +50,27 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-(function() {
-  const viewport = document.getElementById('serverlist');   // скроллящийся элемент
-  const thumb = document.getElementById('custom-scrollbar-thumb');
-  const scrollbar = document.getElementById('custom-scrollbar');
+function initCustomScrollbar(wrapper) {
+  const viewport = wrapper.querySelector('.serverlist');
+  const scrollbar = wrapper.querySelector('.custom-scrollbar');
+  const thumb = wrapper.querySelector('.custom-scrollbar-thumb');
+  if (!viewport || !scrollbar || !thumb) return;
 
-  if (!viewport || !thumb) return;
-
-  // Обновить размер и положение ползунка
   function updateThumb() {
     const scrollTop = viewport.scrollTop;
     const scrollHeight = viewport.scrollHeight;
     const clientHeight = viewport.clientHeight;
 
-    // Если контент меньше высоты — ползунок во весь размер
     if (scrollHeight <= clientHeight) {
       thumb.style.height = '100%';
       thumb.style.top = '0';
       return;
     }
 
-    const thumbHeight = Math.max((clientHeight / scrollHeight) * scrollbar.clientHeight, 20);
+    const thumbHeight = Math.max(
+      (clientHeight / scrollHeight) * scrollbar.clientHeight,
+      20
+    );
     const maxScrollTop = scrollHeight - clientHeight;
     const maxThumbTop = scrollbar.clientHeight - thumbHeight;
     const thumbTop = (scrollTop / maxScrollTop) * maxThumbTop;
@@ -80,11 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   viewport.addEventListener('scroll', updateThumb);
-  // Отслеживаем изменение размеров контейнера
   new ResizeObserver(updateThumb).observe(viewport);
   new ResizeObserver(updateThumb).observe(scrollbar);
 
-  // Перетаскивание ползунка
+  // Перетаскивание
   let isDragging = false, startY, startThumbTop;
 
   thumb.addEventListener('mousedown', (e) => {
@@ -93,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     startY = e.clientY;
     startThumbTop = parseFloat(thumb.style.top) || 0;
     document.body.style.userSelect = 'none';
+    thumb.classList.add('dragging');              // ← добавляем класс
   });
 
   document.addEventListener('mousemove', (e) => {
@@ -112,9 +112,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isDragging) {
       isDragging = false;
       document.body.style.userSelect = '';
+      thumb.classList.remove('dragging');         // ← убираем класс
     }
   });
 
-  // Первичная отрисовка
   updateThumb();
-})();
+}
+
+// Инициализация всех боковых панелей
+document.querySelectorAll('.sidebar-wrapper').forEach(initCustomScrollbar);

@@ -7,6 +7,7 @@
   border-top-right-radius: 10px;
   color: rgb(255, 255, 255);
   box-sizing: border-box; /* Чтобы padding не увеличивал высоту */
+  z-index: 200;
 }
 
 .logo img {
@@ -42,7 +43,7 @@
   background-color: #f9f9f9;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+  z-index: 200;
 }
 
 .dropdown-content a {
@@ -55,6 +56,7 @@
   transition: all 0.2s ease;
   text-decoration: none;
   display: block;
+  z-index: 200;
 }
 
 .dropdown .dropdown-content a:last-child {
@@ -124,7 +126,7 @@
   position: absolute;
   top: 0;
   right: 6px;
-  width: 4px;
+  width: 6px;
   top: 4px;
   height: 100%;
   /*padding: 3px 0;*/
@@ -139,15 +141,32 @@
   left: 0;
   width: 100%;
   border-radius: 10px;
-  background-color: #88888880;
+  background-color: transparent; 
   pointer-events: auto;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease;
   min-height: 20px;
 }
 
+.sidebar-wrapper:hover .custom-scrollbar-thumb {
+  background-color: #88888880;
+}
+
+/* При перетаскивании — показываем всегда, даже если курсор ушёл */
+.custom-scrollbar-thumb.dragging {
+  background-color: rgba(155, 133, 194, 0.822) !important;
+  transition: none;  /* без анимации, чтобы не моргало */
+}
+
+/* Hover по самому ползунку (когда видим) */
 .custom-scrollbar-thumb:hover {
-  background-color: rgba(155, 133, 194, 0.822);
+  background-color: rgba(155, 133, 194, 0.822) !important;
+}
+
+#pcparts-c .server-item.active {
+  background-color: rgb(212, 202, 230);
+  font-weight: 600;
+  color: #715899;
 }
 
 .resizer {
@@ -193,4 +212,80 @@
   background-color: #e6e6e6;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   box-sizing: border-box;
+}
+/* ============================================ */
+/* METRICS DASHBOARD — один график              */
+/* ============================================ */
+
+.metrics-dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+/* Заголовок */
+.metrics-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.metrics-header-icon {
+  font-size: 20px;
+}
+
+.metrics-header-text {
+  font-size: 15px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Карточка текущего значения (большая) */
+.metric-card--large {
+  padding: 18px 20px;
+}
+
+.metric-card--large .metric-card-label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.metric-card--large .metric-card-value {
+  font-size: 36px;
+  font-weight: 700;
+  color: #2a2a2a;
+}
+
+.metric-card--large .metric-card-bar {
+  margin-top: 10px;
+  height: 6px;
+  background: #e0e0e0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.metric-card--large .metric-card-fill {
+  height: 100%;
+  background: #715899;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+/* График на всю ширину */
+.chart-container--full {
+  flex: 1;
+  min-height: 300px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  position: relative;
+  overflow: hidden;
 }
